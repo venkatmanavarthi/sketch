@@ -11,4 +11,5 @@ struct Line {
     let strokeColor : CGColor
     let strokeWidth : Float
     var point : [CGPoint]
+    let opacity : Float
 }
