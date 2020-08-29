@@ -7,9 +7,25 @@
 //
 
 import UIKit
+import Firebase
 
 class SlateViewController: UIViewController {
     fileprivate let colors : [UIColor] = [UIColor.white,UIColor.black,UIColor.red,UIColor.green,UIColor.gray,UIColor.systemPink,UIColor.orange,UIColor.brown,UIColor.yellow,UIColor.blue]
+    private let strokeSlider : UISlider = {
+       let slider = UISlider()
+        slider.minimumValue = 1
+        slider.maximumValue = 100
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        return slider
+    }()
+    private let opacitySlider : UISlider = {
+        let slider = UISlider()
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.value = 1
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        return slider
+    }()
     let collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -30,12 +46,26 @@ class SlateViewController: UIViewController {
     }()
     let clearButton : UIButton = {
         let button = UIButton(type: .system)
+        button.setTitle("clear", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setBackgroundImage(#imageLiteral(resourceName: "clear"), for: .normal)
         button.addTarget(self, action: #selector(clearClicked), for: .touchUpInside)
         return button
     }()
-    
+    let eariser : UIButton = {
+        let button = UIButton(type: .system)
+        button.setBackgroundImage(#imageLiteral(resourceName: "clear"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationController?.navigationBar.isHidden = false
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.navigationBar.isHidden = true
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -46,7 +76,7 @@ class SlateViewController: UIViewController {
         collectionView.delegate = self
         
         [undoButton,clearButton,collectionView].forEach(view.addSubview)
-        [undoButton,clearButton].forEach { (button) in
+        [undoButton].forEach { (button) in
             button.heightAnchor.constraint(equalToConstant: 35).isActive = true
             button.widthAnchor.constraint(equalToConstant: 35).isActive = true
         }
@@ -60,6 +90,7 @@ class SlateViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
             collectionView.heightAnchor.constraint(equalToConstant: 40)
         ])
+        
     }
     
     @objc func undoClicked(){
