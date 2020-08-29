@@ -82,7 +82,8 @@ class LoginViewController : UIViewController{
                               Yours.title = "Your Drawing"
                         sharedDrawingVc.tabBarItem = self!.setTabBarItem(with: "folder")
                               sharedDrawingVc.title = "Sharing"
-                        self?.navigationController?.pushViewController(mainVc, animated: true)
+                        mainVc.modalPresentationStyle = .overFullScreen
+                        self!.present(mainVc,animated: true)
                     }
                 }
             }else{
