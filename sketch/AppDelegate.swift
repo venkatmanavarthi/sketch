@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         if Auth.auth().currentUser != nil{
             let Yours = UINavigationController(rootViewController: PrimaryDrawingViewController())
-            let sharedDrawingVc = SharingViewController()
+            let sharedDrawingVc = UINavigationController(rootViewController: SharingViewController())
             let mainVc = UITabBarController()
             mainVc.viewControllers = [Yours,sharedDrawingVc]
             mainVc.selectedViewController = Yours

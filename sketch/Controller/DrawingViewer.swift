@@ -19,6 +19,7 @@ class DrawingViewerViewController : UIViewController{
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(mainImageView)
+        self.title = data!.title
         mainImageView.loadImage(urlString: data!.url)
     }
 }
