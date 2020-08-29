@@ -73,8 +73,16 @@ class LoginViewController : UIViewController{
                         self?.alert(with: e.localizedDescription)
                         return
                     }else{
-                        let slatVC = SlateViewController()
-                        self?.navigationController?.pushViewController(slatVC, animated: true)
+                        let Yours = UINavigationController(rootViewController: PrimaryDrawingViewController())
+                              let sharedDrawingVc = UINavigationController(rootViewController: SharingViewController())
+                              let mainVc = UITabBarController()
+                              mainVc.viewControllers = [Yours,sharedDrawingVc]
+                              mainVc.selectedViewController = Yours
+                        Yours.tabBarItem = self!.setTabBarItem(with: "brush")
+                              Yours.title = "Your Drawing"
+                        sharedDrawingVc.tabBarItem = self!.setTabBarItem(with: "folder")
+                              sharedDrawingVc.title = "Sharing"
+                        self?.navigationController?.pushViewController(mainVc, animated: true)
                     }
                 }
             }else{
@@ -84,4 +92,11 @@ class LoginViewController : UIViewController{
             alert(with: "Please Enter email and password")
         }
     }
+    func setTabBarItem(with icon : String) -> UITabBarItem{
+            let item = UITabBarItem()
+            item.image = UIImage(named: icon)
+    //        item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+            item.title = nil
+            return item
+        }
 }
