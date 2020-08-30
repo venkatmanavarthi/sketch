@@ -9,9 +9,9 @@
 import UIKit
 class Slate : UIView {
     public var lines = [Line]()
-    fileprivate var strokeColor : CGColor = UIColor.black.cgColor
-    fileprivate var opacity : Float = 1
-    fileprivate var lineWidth : Float = 10
+    private var strokeColor : CGColor = UIColor.black.cgColor
+    private var opacity : Float = 1
+    private var lineWidth : Float = 10
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         guard let context = UIGraphicsGetCurrentContext() else {

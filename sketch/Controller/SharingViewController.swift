@@ -11,7 +11,8 @@ import Firebase
 
 class SharingViewController : UIViewController{
     var drawings : [Drawing] = []
-    fileprivate let db = Firestore.firestore()
+    var allDrawings : [Drawing] = []
+    private let db = Firestore.firestore()
     let tableView : UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +48,7 @@ class SharingViewController : UIViewController{
                }
                db.collection("sharing").order(by: "date").addSnapshotListener { (querySnapShot, error) in
                    self.drawings = []
+                self.allDrawings = []
                    if let e = error{
                        print(e, "issue data retriving")
                        return
@@ -58,6 +60,7 @@ class SharingViewController : UIViewController{
                                    let url = data["url"] as? String,let email = data["email"] as? String{
                                    let dr = Drawing(email: email, url: url, title: title)
                                    self.drawings.append(dr)
+                                self.allDrawings.append(dr)
                                    self.tableView.reloadData()
                                }
                            }
@@ -91,7 +94,18 @@ extension SharingViewController : UITableViewDataSource{
 }
 extension SharingViewController : UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        if searchBar.text?.count == 0{
+            drawings = allDrawings
+            tableView.reloadData()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }else if searchBar.text != nil && searchBar.text != ""{
+            drawings = allDrawings.filter {
+                $0.title.range(of: searchBar.text!, options: .caseInsensitive) != nil
+            }
+            tableView.reloadData()
+        }
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         DispatchQueue.main.async {

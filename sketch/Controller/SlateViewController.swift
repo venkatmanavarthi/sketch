@@ -10,10 +10,10 @@ import UIKit
 import Firebase
 
 class SlateViewController: UIViewController {
-    fileprivate var nameTextField = UITextField()
+    private var nameTextField = UITextField()
     private let storage = Storage.storage()
     let db = Firestore.firestore()
-    fileprivate let colors : [UIColor] = [UIColor.white,UIColor.black,UIColor.red,UIColor.green,UIColor.gray,UIColor.systemPink,UIColor.orange,UIColor.brown,UIColor.yellow,UIColor.blue]
+    private let colors : [UIColor] = [UIColor.white,UIColor.black,UIColor.red,UIColor.green,UIColor.gray,UIColor.systemPink,UIColor.orange,UIColor.brown,UIColor.yellow,UIColor.blue]
     //stroke slider used to increse or decrese the width of the stroke
     private let strokeSlider : UISlider = {
        let slider = UISlider()
