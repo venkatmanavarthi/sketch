@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Photos
 
 class SlateViewController: UIViewController {
     private var nameTextField = UITextField()
@@ -98,7 +99,7 @@ class SlateViewController: UIViewController {
         self.view.backgroundColor = .white
         self.view.addSubview(slate)
         slate.frame = view.frame
-        slate.backgroundColor = .white
+        slate.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -192,6 +193,7 @@ class SlateViewController: UIViewController {
         guard let data = self.slate.asImage().pngData() else{
             return
         }
+        UIImageWriteToSavedPhotosAlbum(UIImage(data: data)!, nil, nil, nil)
         print("images/\(Auth.auth().currentUser!.email!)\(nameTextField.text!).png")
         let ref = storageRef.child("images/\(Auth.auth().currentUser!.email!)\(nameTextField.text!).png")
 
